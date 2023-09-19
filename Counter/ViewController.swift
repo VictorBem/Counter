@@ -30,7 +30,7 @@ class ViewController: UIViewController {
             saveActionInLog()
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -50,7 +50,7 @@ class ViewController: UIViewController {
             counter -= 1
         } else {
             currentTransaction = .decreaseZero
-            saveActionInLog()
+            counter += 0
         }
     }
     
@@ -62,20 +62,25 @@ class ViewController: UIViewController {
     
     //Метод для регистрации изменений в логе
     private func saveActionInLog() {
+        //Константа для хранения форматтера даты времени
+        let formatter = DateFormatter()
+        formatter.dateFormat = "[dd.MM.yyyy HH:mm:ss]:"
+       
+        
         switch currentTransaction {
         case .erase:
-            changeLogTextView.text += "\nзначение сброшено"
+            changeLogTextView.text += "\n" + formatter.string(from: Date()) + " значение сброшено"
         case .minus:
-            changeLogTextView.text += "\nзначение изменено на -1"
+            changeLogTextView.text += "\n" + formatter.string(from: Date()) + " значение изменено на -1"
         case .plus:
-            changeLogTextView.text += "\nзначение изменено на +1 "
+            changeLogTextView.text += "\n" + formatter.string(from: Date()) + " значение изменено на +1 "
         case .decreaseZero:
-            changeLogTextView.text += "\nпопытка уменьшить значение счётчика ниже 0"
+            changeLogTextView.text += "\n" + formatter.string(from: Date()) + " попытка уменьшить значение счётчика ниже 0"
         case .undefined:
             return
         }
 
-        //Если лог уже занимает больше места чем высота поля для ввода лога, то скроллим лог
+        //Если высота лога больше чем высота поля для ввода лога, то скроллим лог
         if changeLogTextView.contentSize.height > changeLogTextView.frame.size.height {
             changeLogTextView.setContentOffset(CGPoint(x: 0, y: changeLogTextView.contentSize.height - changeLogTextView.frame.size.height), animated: true)
         }
