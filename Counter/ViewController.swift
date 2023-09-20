@@ -9,11 +9,11 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var counterScoreLabel: UILabel!
-    @IBOutlet weak var changeLogTextView: UITextView!
+    @IBOutlet private weak var counterScoreLabel: UILabel!
+    @IBOutlet private weak var changeLogTextView: UITextView!
     
     //Перечисление для формирования истории изменений в логе
-    private enum transactionsTypes {
+    private enum TransactionType {
         case plus,
              minus,
              erase,
@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     }
     
     //Переменная для хранения текущей операции
-    private var currentTransaction: transactionsTypes = .undefined
+    private var currentTransaction: TransactionType = .undefined
     
     private var counter: Int = 0 {
         didSet{
@@ -33,18 +33,17 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         self.changeLogTextView.layoutManager.allowsNonContiguousLayout = false
     }
 
     //Метод для увеличения значения счетчика
-    @IBAction func increaseButtonTapped(_ sender: UIButton) {
+    @IBAction private func increaseButtonTapped(_ sender: UIButton) {
         currentTransaction = .plus
         counter += 1
     }
     
     //Метод для уменьшения значения счетчика
-    @IBAction func decreaseButtonTapped(_ sender: UIButton) {
+    @IBAction private func decreaseButtonTapped(_ sender: UIButton) {
         if counter >= 1 {
             currentTransaction = .minus
             counter -= 1
@@ -55,7 +54,7 @@ class ViewController: UIViewController {
     }
     
     //Метод для обнуления значения счетчика
-    @IBAction func eraseCurrentScore(_ sender: UIButton) {
+    @IBAction private func eraseCurrentScore(_ sender: UIButton) {
         currentTransaction = .erase
         counter = 0
     }
